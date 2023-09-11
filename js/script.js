@@ -7,15 +7,35 @@ async function fetchAPIData(endpoint) {
 
 	const response = await fetch(`${API_URL}${endpoint}?api_key=${API_KEY}&language=en-UK`);
 
-    const data = await response.json();
+	const data = await response.json();
 
-    return data;
+	return data;
 }
 
 // Function for displaying popular movies
 async function displayPopularMovies() {
-    const {results} = await fetchAPIData('movie/popular')
-    console.log(results);
+	const { results } = await fetchAPIData("movie/popular");
+	// console.log(results);
+
+	results.forEach((movie) => {
+		const div = document.createElement("div");
+		div.classList.add("card");
+		div.innerHTML = `
+            <a href="movie-details.html?id=${movie.id}">
+                ${
+                    movie.poster_path ? `<img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" class="card-img-top" alt="${movie.title}" />` : `<img src="images/no-image.jpg" class="card-img-top" alt="${movie.title}" />`
+                }
+            </a>
+            <div class="card-body">
+                <h5 class="card-title">${movie.title}</h5>
+                <p class="card-text">
+                    <small class="text-muted">Release: ${movie.release_date}</small>
+                </p>
+            </div>			
+        `;
+
+        document.querySelector('#popular-movies').appendChild(div);
+	});
 }
 
 // Building a simple router
@@ -36,7 +56,7 @@ function init() {
 		case "/":
 		case "/index.html":
 			console.log("Home");
-            displayPopularMovies();
+			displayPopularMovies();
 			break;
 		case "/shows.html":
 			console.log("Shows");
