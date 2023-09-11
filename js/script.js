@@ -5,11 +5,27 @@ async function fetchAPIData(endpoint) {
 	const API_KEY = "adf63fbd25c5258d61c110fbaf9f62a4";
 	const API_URL = "https://api.themoviedb.org/3/";
 
+    // Display spinner before/during data being fetched
+    showSpinner()
+
 	const response = await fetch(`${API_URL}${endpoint}?api_key=${API_KEY}&language=en-UK`);
 
 	const data = await response.json();
 
+    // Once data is fetched, hide the spinner
+    hideSpinner();
+
 	return data;
+}
+
+// Displaying spinner func
+function showSpinner() {
+    document.querySelector('.spinner').classList.add('show');
+}
+
+// Hiding spinner func
+function hideSpinner() {
+    document.querySelector('.spinner').classList.remove('show');
 }
 
 // Function for displaying popular movies
