@@ -1,5 +1,23 @@
 "use strict";
 
+// Fetch data from TMBDP API
+async function fetchAPIData(endpoint) {
+	const API_KEY = "adf63fbd25c5258d61c110fbaf9f62a4";
+	const API_URL = "https://api.themoviedb.org/3/";
+
+	const response = await fetch(`${API_URL}${endpoint}?api_key=${API_KEY}&language=en-UK`);
+
+    const data = await response.json();
+
+    return data;
+}
+
+// Function for displaying popular movies
+async function displayPopularMovies() {
+    const {results} = await fetchAPIData('movie/popular')
+    console.log(results);
+}
+
 // Building a simple router
 // To run specific javascript / functions on specific pages
 
@@ -18,6 +36,7 @@ function init() {
 		case "/":
 		case "/index.html":
 			console.log("Home");
+            displayPopularMovies();
 			break;
 		case "/shows.html":
 			console.log("Shows");
