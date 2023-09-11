@@ -132,6 +132,8 @@ ul {
 .card {
 	background: #04376b;
 	padding: 5px;
+	transition: all 0.5s ease-in-out;
+
 }
 
 .card img {
@@ -145,8 +147,9 @@ ul {
 
 .card:hover {
 	transform: scale(1.05);
-	transition: all 0.5s ease-in-out;
+	/* transition: all 0.5s ease-in-out; */
 	background: #0a4b8f;
+    cursor: pointer;
 }
 
 /* Footer section */
