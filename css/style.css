@@ -133,7 +133,6 @@ ul {
 	background: #04376b;
 	padding: 5px;
 	transition: all 0.5s ease-in-out;
-
 }
 
 .card img {
@@ -149,7 +148,7 @@ ul {
 	transform: scale(1.05);
 	/* transition: all 0.5s ease-in-out; */
 	background: #0a4b8f;
-    cursor: pointer;
+	cursor: pointer;
 }
 
 /* Footer section */
@@ -185,3 +184,16 @@ ul {
 .main-footer .container .social-links a:hover {
 	color: var(--color-secondary);
 }
+
+/* Now playing section */
+section.now-playing {
+	padding: 60px;
+	background: url(../images/showcase-bg.jpg) no-repeat center center/cover;
+}
+
+section h2 {
+	margin: 20px 0;
+	text-align: center;
+	text-transform: uppercase;
+}
+
