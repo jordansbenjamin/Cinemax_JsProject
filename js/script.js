@@ -14,26 +14,39 @@ const global = {
 // Initialise app
 // Simple router logic for executing function required for each specified page
 function init() {
-    switch (global.currentPage) {
-        case '/':
-        case '/index.html':
-            console.log('Home');
-            break;
-        case '/shows.html':
-            console.log('Shows');
-            break;
-        case '/movie-details.html':
-            console.log('Movie Details');
-            break;
-        case '/tv-details.html':
-            console.log('TV Details');
-            break;
-        case '/search.html':
-            console.log('Search');
-            break;
-    }
+	switch (global.currentPage) {
+		case "/":
+		case "/index.html":
+			console.log("Home");
+			break;
+		case "/shows.html":
+			console.log("Shows");
+			break;
+		case "/movie-details.html":
+			console.log("Movie Details");
+			break;
+		case "/tv-details.html":
+			console.log("TV Details");
+			break;
+		case "/search.html":
+			console.log("Search");
+			break;
+	}
+
+	higlightActiveLink();
+}
+
+// Highlight active link
+function higlightActiveLink() {
+	const links = document.querySelectorAll(".nav-link");
+
+	links.forEach((link) => {
+		if (link.getAttribute("href") === global.currentPage) {
+			link.classList.add("active");
+		}
+	});
 }
 
 // Only gets triggered when all the DOM elements are loaded on the page for the init func to execute
 // Basically when the initial HTML document has been completely loaded and parsed
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener("DOMContentLoaded", init);
