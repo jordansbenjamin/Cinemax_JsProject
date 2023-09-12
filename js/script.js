@@ -2,8 +2,8 @@
 
 // Fetch data from TMBDP API
 async function fetchAPIData(endpoint) {
-	const API_KEY = "adf63fbd25c5258d61c110fbaf9f62a4";
-	const API_URL = "https://api.themoviedb.org/3/";
+	const API_KEY = global.api.apiKey;
+	const API_URL = global.api.apiUrl;
 
     // Display spinner before/during data being fetched
     showSpinner()
@@ -16,6 +16,42 @@ async function fetchAPIData(endpoint) {
     hideSpinner();
 
 	return data;
+}
+
+// Make request to search
+async function searchAPIData(endpoint) {
+	const API_KEY = global.api.apiKey;
+	const API_URL = global.api.apiUrl;
+
+    // Display spinner before/during data being fetched
+    showSpinner()
+
+	const response = await fetch(`${API_URL}search/${global.search.type}?api_key=${API_KEY}&language=en-UK&query=${global.search.term}`);
+
+	const data = await response.json();
+
+    // Once data is fetched, hide the spinner
+    hideSpinner();
+
+	return data;
+}
+
+// Search movies/shows
+
+async function search() {
+	const queryString = window.location.search;
+	// console.log(queryString);
+	const urlParams = new URLSearchParams(queryString);
+	global.search.type = urlParams.get('type');
+	global.search.term = urlParams.get('search-term');
+
+	if (global.search.term !== '' && global.search.term !== null) {
+		// @todo - make request and display results
+		const results = await searchAPIData();
+		console.log(results);
+	} else {
+		showAlert('Please enter a search term');
+	}
 }
 
 // Displaying spinner func
@@ -272,6 +308,16 @@ function initSwiper() {
 // global state variable
 const global = {
 	currentPage: window.location.pathname,
+	search: {
+		term: '',
+		type: '',
+		page: 1,
+		totalPages: 1
+	},
+	api: {
+		apiKey: "adf63fbd25c5258d61c110fbaf9f62a4",
+		apiUrl: "https://api.themoviedb.org/3/"
+	}
 };
 // console.log(global.currentPage);
 
@@ -299,10 +345,24 @@ function init() {
 			break;
 		case "/search.html":
 			console.log("Search");
+			search();
 			break;
 	}
 
 	higlightActiveLink();
+}
+
+// Show alerts
+function showAlert(message, className) {
+	const alertEl = document.createElement('div');
+	alertEl.classList.add('alert', className);
+	alertEl.appendChild(document.createTextNode(message));
+	document.querySelector('#alert').appendChild(alertEl);
+
+	// After a certain amount of time the alert go away
+	setTimeout(() => {
+		alertEl.remove()
+	}, 3000);
 }
 
 // Highlight active link
